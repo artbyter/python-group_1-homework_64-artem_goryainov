@@ -3,7 +3,7 @@ from django.urls import reverse
 import random
 import string
 from django.conf import settings
-
+import django_filters
 
 class SoftDeleteManager(models.Manager):
     def active(self):
@@ -73,6 +73,11 @@ class Show(models.Model):
         return "%s, %s (%s - %s)" % (self.movie, self.hall,
                                      self.starts_at.strftime('%d.%m.%Y %H:%M'),
                                      self.ends_at.strftime('%d.%m.%Y %H:%M'))
+
+
+
+
+
 
 
 def generate_code():
