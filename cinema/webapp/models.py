@@ -69,10 +69,13 @@ class Show(models.Model):
     ends_at = models.DateTimeField()
     ticket_price = models.DecimalField(max_digits=8, decimal_places=2)
 
+
+
     def __str__(self):
         return "%s, %s (%s - %s)" % (self.movie, self.hall,
                                      self.starts_at.strftime('%d.%m.%Y %H:%M'),
                                      self.ends_at.strftime('%d.%m.%Y %H:%M'))
+
 
 
 

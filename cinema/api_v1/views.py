@@ -52,3 +52,20 @@ class SeatViewSet(NoAuthModelViewSet):
 class ShowViewSet(NoAuthModelViewSet):
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        movie_id = self.request.query_params.get('movie_id', None)
+        hall_id = self.request.query_params.get('hall_id', None)
+        starts_after = self.request.query_params.get('starts_after', None)
+        starts_before = self.request.query_params.get('starts_before', None)
+
+        if movie_id:
+            queryset = queryset.filter(movie_id=movie_id)
+        if hall_id:
+            queryset = queryset.filter(hall_id=hall_id)
+        if starts_after:
+            queryset = queryset.filter(starts_at__gte=starts_after)
+        if starts_before:
+            queryset = queryset.filter(starts_at__lte=starts_before)
+        return queryset

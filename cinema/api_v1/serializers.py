@@ -66,6 +66,17 @@ class ShowSerializer(serializers.ModelSerializer):
     movie_url = serializers.HyperlinkedRelatedField(view_name='api_v1:movie-detail', read_only=True, source='movie')
     hall_url = serializers.HyperlinkedRelatedField(view_name='api_v1:hall-detail', read_only=True, source='hall')
 
+    hall_name = serializers.SerializerMethodField(read_only=True, source='hall')
+    movie_name = serializers.SerializerMethodField(read_only=True, source='movie')
+
+    def get_hall_name(self, show):
+        return show.hall.name
+
+    def get_movie_name(self, show):
+        return show.movie.name
+
     class Meta:
         model = Show
-        fields = ('url', 'id', 'movie', 'movie_url', 'hall', 'hall_url', 'starts_at', 'ends_at')
+        fields = (
+            'url', 'id', 'movie', 'movie_url', 'hall', 'hall_url', 'starts_at', 'ends_at', 'ticket_price', 'hall_name',
+            'movie_name')
