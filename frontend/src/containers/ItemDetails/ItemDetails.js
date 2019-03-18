@@ -48,7 +48,8 @@ export default class ItemDetails extends Component {
         // encodeURI закодирует строку для передачи в запросе
         // отличается от encodeURIComponent тем, что пропускает символы,
         // входящие в формат URI, в т.ч. & и =.
-        const query = encodeURI(`hall_id=${itemId}&starts_after=${startsAfter}&starts_before=${startsBefore}`);
+        const id=this.props.itemType==='hall'?'hall_id':'movie_id'
+        const query = encodeURI(`${id}=${itemId}&starts_after=${startsAfter}&starts_before=${startsBefore}`);
 
         axios.get(`${SHOWS_URL}?${query}`).then(response => {
 
