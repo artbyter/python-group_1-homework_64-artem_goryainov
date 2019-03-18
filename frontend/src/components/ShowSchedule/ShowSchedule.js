@@ -15,7 +15,7 @@ const ShowSchedule = props => {
     return <div className="mt-4">
         <h2>Расписание показов</h2>
         {props.shows.map(show => {
-            return <p key={show.id}>{formatDate(show.starts_at)}, {show.hall_name}, {show.movie_name}</p>
+            return <p className='border border-dark' key={show.id}>{formatDate(show.starts_at)}, {props.itemType!=='hall'?"Hall: "+show.hall_name:show.movie_name}</p>
         })}
     </div>
 };

@@ -92,7 +92,7 @@ export default class ItemDetails extends Component {
 
             {/* назад */}
             <NavLink to={url} className="btn btn-primary">{this.props.buttonText}</NavLink>
-            {this.state.shows ? <ShowSchedule shows={this.state.shows}/> : null}
+            {this.state.shows ? <ShowSchedule shows={this.state.shows} itemType={this.props.itemType}/> : null}
         </div>;
     }
 }
