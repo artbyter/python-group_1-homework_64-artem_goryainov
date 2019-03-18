@@ -25,11 +25,11 @@ class HallForm extends Component {
         };
 
         // если movie передан через props
-        if(this.props.hall) {
+        if(this.props.item) {
 
 
             // записываем в state существующий movie
-            this.state.hall = this.props.hall;
+            this.state.hall = this.props.item;
 
 
         }

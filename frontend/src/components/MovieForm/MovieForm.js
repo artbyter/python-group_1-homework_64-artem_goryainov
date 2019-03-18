@@ -36,14 +36,14 @@ class MovieForm extends Component {
         };
 
         // если movie передан через props
-        if(this.props.movie) {
+        if(this.props.item) {
             // браузер запрещает программно записывать в value полей типа "file"
             // что-либо, кроме пустой строки
             // поэтому ссылку на текущий постер храним в другом свойстве и отображаем рядом
-            this.state.posterUrl = this.props.movie.poster;
+            this.state.posterUrl = this.props.item.poster;
 
             // записываем в state существующий movie
-            this.state.movie = this.props.movie;
+            this.state.movie = this.props.item;
 
             // но удаляем у него значение poster
             // чтобы при сабмите формы не отправлять существующий url или пустую строку
