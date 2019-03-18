@@ -2,6 +2,7 @@ import React, {Fragment, Component} from 'react'
 import {HALLS_URL} from "../../api-urls";
 import HallCard from "../../components/HallCard/HallCard";
 import {NavLink} from "react-router-dom";
+import ItemCard from "../../components/ItemCard"
 import axios from 'axios';
 
 class HallList extends Component {
@@ -39,12 +40,16 @@ class HallList extends Component {
     };
 
     render() {
+        const link = {
+        text: 'Read more',
+        url: '/halls/'
+    };
         return <Fragment>
             <p><NavLink to='/halls/add'>Добавить зал</NavLink></p>
             <div className='row'>
                 {this.state.halls.map(hall => {
                     return <div className='col-xs-12 col-sm-6 col-lg-4 mt-3' key={hall.id}>
-                        <HallCard hall={hall} onDelete={this.hallDeleted}/>
+                        <ItemCard item={hall} link={link} onDelete={this.hallDeleted}/>
                     </div>
                 })}
             </div>
