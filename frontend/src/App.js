@@ -10,8 +10,6 @@ import HallList from "./containers/HallList/HallList"
 import HallDetail from "./containers/HallDetail/HallDetail"
 import HallAdd from "./containers/HallAdd/HallAdd"
 import HallEdit from "./containers/HallEdit/HallEdit"
-import MovieHeader from "./containers/MovieHeader/MovieHeader"
-import {MOVIES_URL, HALLS_URL} from "./api-urls";
 import Layout from "./components/UI/Layout";
 
 
