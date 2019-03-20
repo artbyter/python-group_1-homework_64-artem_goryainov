@@ -32,7 +32,8 @@ class MovieForm extends Component {
             submitEnabled: true,
             // изначально movie пустой (для формы добавления)
             movie: newMovie,
-            posterFileName: ""
+            posterFileName: "",
+
         };
 
         // если movie передан через props
@@ -130,7 +131,7 @@ class MovieForm extends Component {
 
     // обработчик изменения дат
     dateChanged = (field, date) => {
-        this.updateMovieState(field, date.toISOString().slice(0, 10));
+        this.updateMovieState(field, date && date.toISOString().slice(0, 10));
     };
 
     // обработчик изменения select
@@ -189,6 +190,7 @@ class MovieForm extends Component {
                         <input type="text" className="form-control" name="name" value={name}
                                onChange={this.inputChanged}/>
                     </div>
+                    {this.props.showErrors('name')}
                     <div className="form-group">
                         <label>Описание</label>
                         <input type="text" className="form-control" name="description" value={description}
@@ -203,6 +205,7 @@ class MovieForm extends Component {
                                         onChange={(date) => this.dateChanged('release_date', date)}/>
                         </div>
                     </div>
+                    {this.props.showErrors('release_date')}
                     <div className="form-group">
                         <label>Дата завершения проката</label>
                         <div>

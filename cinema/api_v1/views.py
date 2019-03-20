@@ -4,14 +4,21 @@ from rest_framework import viewsets
 from api_v1.serializers import MovieCreateSerializer, MovieDisplaySerializer, \
     CategorySerializer, HallSerializer, SeatSerializer, ShowSerializer
 
-
-# Базовый класс ViewSet, основанный на ModelViewSet,
-# но с отключенной проверкой аутентификации, и не блокирующий запросы без токена.
-class NoAuthModelViewSet(viewsets.ModelViewSet):
-    authentication_classes = []
+from rest_framework.permissions import IsAuthenticated
 
 
-class MovieViewSet(NoAuthModelViewSet):
+class BaseViewSet(viewsets.ModelViewSet):
+    # Метод, который отвечает за проверку разрешений на доступ к данному ViewSet
+    def get_permissions(self):
+        permissions = super().get_permissions()
+        # IsAuthenticated - класс разрешения, требующий аутентификацию
+        # добавляем его объект ( IsAuthenticated() ) к разрешениям только
+        # для "опасных" методов - добавление, редактирование, удаление данных.
+        if self.request.method in ["POST", "DELETE", "PUT", "PATCH"]:
+            permissions.append(IsAuthenticated())
+        return permissions
+
+class MovieViewSet(BaseViewSet):
     queryset = Movie.objects.active().order_by('id')
 
     # Метод, который отвечает за то,
@@ -34,22 +41,22 @@ class MovieViewSet(NoAuthModelViewSet):
         instance.save()
 
 
-class CategoryViewSet(NoAuthModelViewSet):
+class CategoryViewSet(BaseViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
-class HallViewSet(NoAuthModelViewSet):
+class HallViewSet(BaseViewSet):
     queryset = Hall.objects.all()
     serializer_class = HallSerializer
 
 
-class SeatViewSet(NoAuthModelViewSet):
+class SeatViewSet(BaseViewSet):
     queryset = Seat.objects.all()
     serializer_class = SeatSerializer
 
 
-class ShowViewSet(NoAuthModelViewSet):
+class ShowViewSet(BaseViewSet):
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
 

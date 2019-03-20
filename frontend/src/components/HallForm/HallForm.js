@@ -33,6 +33,7 @@ class HallForm extends Component {
 
 
         }
+        console.log(this.props)
     }
 
 
@@ -110,6 +111,7 @@ class HallForm extends Component {
                         <input type="text" className="form-control" name="name" value={name}
                                onChange={this.inputChanged}/>
                     </div>
+                    {this.props.showErrors('name')}
                     <div className="form-group">
                         <label>Описание</label>
                         <input type="text" className="form-control" name="description" value={description}

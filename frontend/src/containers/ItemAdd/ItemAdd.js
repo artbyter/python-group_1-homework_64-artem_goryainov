@@ -9,6 +9,7 @@ export default class ItemAdd extends Component {
     state = {
         // сообщение об ошибке
         alert: null,
+        errors:{}
     };
 
     // вывод сообщение об ошибке
@@ -40,13 +41,14 @@ export default class ItemAdd extends Component {
 
     // обработчик отправки формы
     formSubmitted = (item) => {
-        const {url,id}=this.props.url
+        const {url,id}=this.props
         // сборка данных для запроса
         const formData = this.gatherFormData(item);
 
         // отправка запроса
-        return axios.post(url, formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
+        return axios.post(url , formData, {
+            headers: {'Content-Type': 'multipart/form-data',
+            'Authorization': 'Token ' + localStorage.getItem('auth-token')}
         })
             .then(response => {
                 // при успешном создании response.data содержит данные фильма
@@ -63,14 +65,25 @@ export default class ItemAdd extends Component {
                 // пока что выводим их в консоль
                 console.log(error.response);
                 this.showErrorAlert(error.response);
+                this.setState({
+                ...this.state,
+                errors: error.response.data
+            })
             });
     };
-
+     showErrors = (name) => {
+        if(this.state.errors && this.state.errors[name]) {
+            return this.state.errors[name].map((error, index) => <p className="text-danger" key={index}>{error}</p>);
+        }
+        return null;
+    };
     render() {
+        console.log('Errors')
+        console.log(this.props.errors)
         const alert = this.state.alert;
         return <Fragment>
             {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            {this.props.itemType==='hall'?<HallForm onSubmit={this.formSubmitted}/>:<MovieForm onSubmit={this.formSubmitted}/>}
+            {this.props.itemType==='hall'?<HallForm onSubmit={this.formSubmitted} showErrors={this.showErrors}/>:<MovieForm onSubmit={this.formSubmitted} showErrors={this.showErrors}/>}
         </Fragment>
     }
 }
